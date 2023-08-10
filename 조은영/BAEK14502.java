@@ -75,12 +75,12 @@ public class BAEK14502 {
 	static void comb(int cnt, int start) {
 		if(cnt==3) {
 			// 배열에 저장하고 0,1,2로 접근해서 꺼내 쓰기
-			int []empty0=Empty.get(combi[0]);
-			int []empty1=Empty.get(combi[1]);
-			int []empty2=Empty.get(combi[2]);
+			int []empty0=Empty.get(picked[0]);
+			int []empty1=Empty.get(picked[1]);
+			int []empty2=Empty.get(picked[2]);
 			
 			// 여기서 값이 제대로 안들어옴
-			System.out.println(empty0[0]+" "+empty0[1]+" "+empty1[0]+" "+empty1[1]+" "+empty2[0]+" "+empty2[1]);
+			//System.out.println(empty0[0]+" "+empty0[1]+" "+empty1[0]+" "+empty1[1]+" "+empty2[0]+" "+empty2[1]);
 			numberOfCase.add(new int[][] {{empty0[0], empty0[1]}, {empty1[0], empty1[1]}, {empty2[0], empty2[1]}});
 			return;
 		}
@@ -103,17 +103,17 @@ public class BAEK14502 {
 		
 		// 세개의 wall 설치
 		for(int []xy : walls) {
-			int x=xy[1];
-			int y=xy[0];
-			map[y][x]=1;
+			int x=xy[0];
+			int y=xy[1];
+			map[x][y]=1;
 		}
 		
 		// 탐색
 		while(que.size()>0) {
 			
 			int[]xy=que.poll();
-			int y=xy[0];
-			int x=xy[1];
+			int y=xy[1];
+			int x=xy[0];
 			
 			//4방 탐색
 			for(int i=0; i<4; i++) {
@@ -121,9 +121,9 @@ public class BAEK14502 {
 				int ny=y+dy[i];
 			
 				if(nx>=0 && nx<N && ny>=0 && ny<M) {
-					if(map[ny][nx]==0) {
-						map[ny][nx]=2;
-						que.add(new int[] {ny, nx});
+					if(map[nx][ny]==0) {
+						map[nx][ny]=2;
+						que.add(new int[] {nx, ny});
 					}
 					
 				}
