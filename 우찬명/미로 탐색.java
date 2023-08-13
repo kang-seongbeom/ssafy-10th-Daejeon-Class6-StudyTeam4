@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayDeque;
+import java.util.Arrays;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
@@ -21,8 +22,8 @@ public class Main {
     static int n,m;
     static boolean[][] visited;
     static int[][] maze;
-    static int[] dr = {-1,0,1,0};
-    static int[] dc = {0,1,0,-1};
+    static int[] dr = {-1,1,0,0};
+    static int[] dc = {0,0,-1,1};
     private static void BFS(Point p) {
         Queue<Point> queue = new ArrayDeque<>();
         queue.offer(p);
@@ -43,12 +44,10 @@ public class Main {
                 int nr = now.r + dr[k];
                 int nc = now.c + dc[k];
 
-                // if(inRange(nr,nc) && maze[nr][nc]==1) <<< 4방탐색이 시작이 상우하좌인데
-                // 시작점에서 상을 탐색 시 padding도 안 주었기 때문에 값이 없어서 시작 자체가 불가능했다
-                if(inRange(nr,nc)) {
+                if(inRange(nr,nc) && maze[nr][nc]==1) {
                     //cnt++; // cnt를 갱신해주어야지 단순 증가시키는 것은 코드 오류
                     // 모든 지점의 cnt를 관리필요 -> 큐에 같이 넣기(BFS)
-                    if(visited[nr][nc] || maze[nr][nc]==0) continue;
+                    if(visited[nr][nc]) continue;
                     visited[nr][nc]=true;
                     queue.offer(new Point(nr,nc,now.cnt+1));
                 }
@@ -70,9 +69,11 @@ public class Main {
         for(int i=0; i<n; i++) {
             String line = br.readLine();
             for(int j=0; j<m; j++) {
-                maze[i][j] = line.charAt(j);
+                maze[i][j] = line.charAt(j)-'0'; // int로 넣어주기 위한 char to int
             }
         }
+
+//        for(int[] arr: maze) System.out.println(Arrays.toString(arr));
 
         visited[0][0]=true;
         BFS(new Point(0,0,1));
