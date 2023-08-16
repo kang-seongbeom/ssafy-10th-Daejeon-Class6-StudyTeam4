@@ -32,7 +32,6 @@ public class Dfs {
 				output[depth] = arr[i];
 				perm(arr, output, visited, depth + 1, n, r);
 				visited[i] = false;
-				System.out.println("ㄳ..");
 			}
 		}
 	}
